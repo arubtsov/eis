@@ -4,6 +4,9 @@
   "description": "",
   "main": "index.js",
   "scripts": {
+    "install:client": "cd client && npm install",
+    "install:backend": "cd backend && npm install",
+    "postinstall": "npm run install:client && npm run install:backend",
     "test": "echo \"Error: no test specified\" && exit 1",
     "client:dev": "npm run start --prefix client",
     "backend:dev": "npm run dev --prefix backend",
