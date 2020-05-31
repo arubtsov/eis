@@ -1,8 +1,10 @@
 import { useState, useEffect } from 'react';
 
-interface Product {
+export interface Product {
     name: string;
-    price: string;
+    price: {
+        "$numberDecimal": string;
+    };
     quantity: number;
     colour: string;
 }
