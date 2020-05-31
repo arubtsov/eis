@@ -1,9 +1,12 @@
 import React from 'react';
+import useProducts from './use-products-hook';
 
 function ProductList () {
+    const { products } = useProducts();
+
     return (
         <div>
-            Empty
+            {JSON.stringify(products)}
         </div>
     );
 }
