@@ -1,0 +1,19 @@
+.add_product {
+    display: flex;
+    padding: 15px 20px 20px;
+    align-items: center;
+}
+
+.add_product__button {
+    padding: 15px 30px;
+}
+
+.add_product__drop_area {
+    display: flex;
+    align-items: center;
+    flex-grow: 1;
+    margin-left: 20px;
+    padding-left: 20px;
+    height: 80px;
+    background-color: lightgray;
+}
