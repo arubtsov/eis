@@ -1,5 +1,5 @@
 import { useState, useEffect } from 'react';
-import { Product } from '../store/types';
+import { Product } from '../store';
 
 function useProducts () {
     const [error, setError] = useState('');
