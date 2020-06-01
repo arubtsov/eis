@@ -3,19 +3,22 @@ import {
     ProductsActionTypes,
     REQUEST_PRODUCTS,
     FETCH_SUCCESS,
-    FETCH_FAIL
+    FETCH_FAIL,
+    FILTER_PRODUCTS
 } from '../actions';
 
 export interface ProductsState {
     isLoading: boolean;
     fetchError: string;
     products: Product[];
+    filteredProducts: Product[];
 }
 
 const defaultState: ProductsState = {
     isLoading: false,
     fetchError: '',
-    products: []
+    products: [],
+    filteredProducts: []
 }
 
 const products = (state = defaultState, action: ProductsActionTypes): ProductsState => {
@@ -29,13 +32,22 @@ const products = (state = defaultState, action: ProductsActionTypes): ProductsSt
             return {
                 fetchError: '',
                 isLoading: false,
-                products: action.products
+                products: action.products,
+                filteredProducts: action.products
             };
         case FETCH_FAIL:
             return {
                 products: [],
+                filteredProducts: [],
                 fetchError: action.error,
                 isLoading: false
+            };
+        case FILTER_PRODUCTS:
+            return {
+                ...state,
+                filteredProducts: state.products.filter(
+                    item => item.name.toLowerCase().includes(action.namePart.trim().toLowerCase())
+                )
             };
         default:
             return state

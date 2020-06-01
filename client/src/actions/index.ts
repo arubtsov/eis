@@ -4,15 +4,18 @@ import {
     ProductsActionTypes,
     REQUEST_PRODUCTS,
     FETCH_SUCCESS,
-    FETCH_FAIL
+    FETCH_FAIL,
+    FILTER_PRODUCTS
 } from './types';
 import { Product } from '../store';
 import { ProductsState } from '../reducers';
 
+type DispatchFunction = ThunkDispatch<ProductsState, {}, ProductsActionTypes>;
+
 export function requestProducts (): ProductsActionTypes {
     return {
         type: REQUEST_PRODUCTS
-    }
+    };
 };
 
 export function receiveProducts (products: Product[]): ProductsActionTypes {
@@ -29,7 +32,12 @@ export function rejectFetch (error: string): ProductsActionTypes {
     };
 };
 
-type DispatchFunction = ThunkDispatch<ProductsState, {}, ProductsActionTypes>;
+export function filterProducts (namePart: string): ProductsActionTypes {
+    return {
+        type: FILTER_PRODUCTS,
+        namePart
+    };
+};
 
 export function fetchProducts () {
     return async function (dispatch: DispatchFunction): Promise<void> {
