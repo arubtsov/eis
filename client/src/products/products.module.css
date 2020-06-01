@@ -1,0 +1,12 @@
+.products {
+    display: flex;
+    flex-wrap: wrap;
+}
+
+.item {
+    margin: 10px 20px 40px 20px;
+}
+
+.name {
+    text-align: center;
+}
