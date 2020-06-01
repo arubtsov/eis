@@ -1,14 +1,5 @@
 import { useState, useEffect } from 'react';
-
-export interface Product {
-    _id: string;
-    name: string;
-    price: {
-        "$numberDecimal": string;
-    };
-    quantity: number;
-    colour: string;
-}
+import { Product } from '../store/types';
 
 function useProducts () {
     const [error, setError] = useState('');

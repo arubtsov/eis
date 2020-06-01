@@ -1,5 +1,5 @@
 import React from 'react';
-import { Product } from './use-products-hook';
+import { Product } from '../store/types';
 import styles from './products.module.css';
 
 function ProductItem (props: Product) {
