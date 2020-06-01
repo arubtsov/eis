@@ -1,6 +1,7 @@
 import { useState, useEffect } from 'react';
 
 export interface Product {
+    _id: string;
     name: string;
     price: {
         "$numberDecimal": string;
