@@ -2,6 +2,7 @@ import React, { useCallback, ChangeEventHandler } from 'react';
 import { useDispatch } from 'react-redux';
 
 import { filterProducts } from '../actions';
+import styles from './search.module.css';
 
 export default function SearchBar () {
     const dispatch = useDispatch();
@@ -11,6 +12,6 @@ export default function SearchBar () {
     }, [dispatch])
 
     return (
-        <input type="text" onChange={onChange} />
+        <input type="text" className={styles.input} onChange={onChange} />
     );
 }
