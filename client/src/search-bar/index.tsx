@@ -12,6 +12,6 @@ export default function SearchBar () {
     }, [dispatch])
 
     return (
-        <input type="text" className={styles.input} onChange={onChange} />
+        <input type="text" className={styles.search_bar__input} onChange={onChange} />
     );
 }
