@@ -1,9 +1,12 @@
 import React from 'react';
-import { Product } from '../store';
+
 import styles from './products.module.css';
+import { Product } from '../store';
+import useDelete from './use-delete-hook';
 
 function ProductItem (props: Product) {
-    const { name, price, quantity, colour } = props;
+    const { _id, name, price, quantity, colour } = props;
+    const deleteProduct = useDelete(_id);
 
     return (
         <div className={styles.item}>
@@ -11,6 +14,8 @@ function ProductItem (props: Product) {
             <div>Price: {price.$numberDecimal}</div>
             <div>{quantity ? `Quantity: ${quantity}` : 'Out of order'}</div>
             <div>Colour: {colour}</div>
+
+            <button onClick={deleteProduct}>X</button>
         </div>
     )
 }

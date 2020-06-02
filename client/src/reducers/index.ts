@@ -8,7 +8,8 @@ import {
     CREATE_PRODUCT,
     CANCEL_CREATION,
     SAVE_SUCCESS,
-    SAVE_FAIL
+    SAVE_FAIL,
+    DELETE_SUCCESS
 } from '../actions';
 
 export interface ProductsState {
@@ -90,6 +91,14 @@ const products = (state = defaultState, action: ProductsActionTypes): ProductsSt
             return {
                 ...state,
                 requestError: action.error
+            };
+        case DELETE_SUCCESS:
+            const isNotDeleted = (product: Product) => product._id !== action.productId;
+
+            return {
+                ...state,
+                products: state.products.filter(isNotDeleted),
+                filteredProducts: state.filteredProducts.filter(isNotDeleted)
             };
         default:
             return state

@@ -10,7 +10,10 @@ import {
     CANCEL_CREATION,
     REQUEST_SAVE,
     SAVE_SUCCESS,
-    SAVE_FAIL
+    SAVE_FAIL,
+    REQUEST_DELETE,
+    DELETE_SUCCESS,
+    DELETE_FAIL
 } from './types';
 import { Product } from '../store';
 import { ProductsState } from '../reducers';
@@ -116,6 +119,38 @@ export function saveProduct (product: Omit<Product, '_id' | 'price'> & { price: 
         }
         else
             dispatch(failSave(error));
+    };
+}
+
+export function requestDelete (): ProductsActionTypes {
+    return {
+        type: REQUEST_DELETE
+    };
+};
+
+export function successDelete (productId: string): ProductsActionTypes {
+    return {
+        type: DELETE_SUCCESS,
+        productId
+    };
+};
+
+export function failDelete (): ProductsActionTypes {
+    return {
+        type: DELETE_FAIL
+    };
+};
+
+export function deleteProduct (productId: string) {
+    return async function (dispatch: DispatchFunction): Promise<void> {
+        dispatch(requestDelete());
+
+        const response = await fetch(`/product/${productId}`, { method: 'DELETE' });
+
+        if (response.ok)
+            dispatch(successDelete(productId));
+        else
+            dispatch(failDelete());
     };
 }
 

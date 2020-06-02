@@ -3,12 +3,19 @@ import { Product } from '../store';
 export const REQUEST_PRODUCTS = 'REQUEST_PRODUCTS';
 export const FETCH_SUCCESS = 'FETCH_SUCCESS';
 export const FETCH_FAIL = 'FETCH_FAIL';
+
 export const FILTER_PRODUCTS = 'FILTER_PRODUCTS';
+
 export const CREATE_PRODUCT = 'CREATE_PRODUCT';
 export const CANCEL_CREATION = 'CANCEL_CREATION';
+
 export const REQUEST_SAVE = 'REQUEST_SAVE';
 export const SAVE_SUCCESS = 'SAVE_SUCCESS';
 export const SAVE_FAIL = 'SAVE_FAIL';
+
+export const REQUEST_DELETE = 'REQUEST_DELETE';
+export const DELETE_SUCCESS = 'DELETE_SUCCESS';
+export const DELETE_FAIL = 'DELETE_FAIL';
 
 interface FetchProductsAction {
     type: typeof REQUEST_PRODUCTS;
@@ -51,6 +58,19 @@ interface SaveFailAction {
     error: string;
 }
 
+interface RequestDeletionAction {
+    type: typeof REQUEST_DELETE;
+}
+
+interface DeleteSuccessAction {
+    type: typeof DELETE_SUCCESS;
+    productId: string;
+}
+
+interface DeleteFailAction {
+    type: typeof DELETE_FAIL;
+}
+
 export type ProductsActionTypes =
     FetchProductsAction |
     ReceiveProductsAction |
@@ -60,4 +80,7 @@ export type ProductsActionTypes =
     CancelProductCreationAction |
     RequestSaveAction |
     SaveSuccessAction |
-    SaveFailAction;
+    SaveFailAction |
+    RequestDeletionAction |
+    DeleteSuccessAction |
+    DeleteFailAction;
