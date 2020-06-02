@@ -5,7 +5,9 @@ import {
     REQUEST_PRODUCTS,
     FETCH_SUCCESS,
     FETCH_FAIL,
-    FILTER_PRODUCTS
+    FILTER_PRODUCTS,
+    CREATE_PRODUCT,
+    CANCEL_CREATION
 } from './types';
 import { Product } from '../store';
 import { ProductsState } from '../reducers';
@@ -51,6 +53,18 @@ export function fetchProducts () {
         else
             dispatch(rejectFetch(json.error));
     };
-}
+};
+
+export function createProduct (): ProductsActionTypes {
+    return {
+        type: CREATE_PRODUCT
+    };
+};
+
+export function cancelCreation (): ProductsActionTypes {
+    return {
+        type: CANCEL_CREATION
+    };
+};
 
 export * from './types';
