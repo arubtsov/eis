@@ -1,4 +1,17 @@
-.form {
+.modal__content {
+    margin: auto;
+}
+
+.modal__form {
     display: flex;
     flex-direction: column;
+}
+
+.modal__form input {
+    margin-bottom: 20px;
+}
+
+.modal__form .button_group {
+    display: flex;
+    justify-content: space-between;
 }
