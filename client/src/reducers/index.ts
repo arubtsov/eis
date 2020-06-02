@@ -4,7 +4,9 @@ import {
     REQUEST_PRODUCTS,
     FETCH_SUCCESS,
     FETCH_FAIL,
-    FILTER_PRODUCTS
+    FILTER_PRODUCTS,
+    CREATE_PRODUCT,
+    CANCEL_CREATION
 } from '../actions';
 
 export interface ProductsState {
@@ -12,14 +14,26 @@ export interface ProductsState {
     fetchError: string;
     products: Product[];
     filteredProducts: Product[];
+    newProduct: Product | null;
 }
 
 const defaultState: ProductsState = {
     isLoading: false,
     fetchError: '',
     products: [],
-    filteredProducts: []
-}
+    filteredProducts: [],
+    newProduct: null
+};
+
+const defaultProduct: Product = {
+    _id: '',
+    name: "Product XYZ",
+    quantity: 1,
+    price: {
+        $numberDecimal: '1'
+    },
+    colour: 'white'
+};
 
 const products = (state = defaultState, action: ProductsActionTypes): ProductsState => {
     switch (action.type) {
@@ -30,6 +44,7 @@ const products = (state = defaultState, action: ProductsActionTypes): ProductsSt
             };
         case FETCH_SUCCESS:
             return {
+                ...state,
                 fetchError: '',
                 isLoading: false,
                 products: action.products,
@@ -37,6 +52,7 @@ const products = (state = defaultState, action: ProductsActionTypes): ProductsSt
             };
         case FETCH_FAIL:
             return {
+                ...state,
                 products: [],
                 filteredProducts: [],
                 fetchError: action.error,
@@ -48,6 +64,16 @@ const products = (state = defaultState, action: ProductsActionTypes): ProductsSt
                 filteredProducts: state.products.filter(
                     item => item.name.toLowerCase().includes(action.namePart.trim().toLowerCase())
                 )
+            };
+        case CREATE_PRODUCT:
+            return {
+                ...state,
+                newProduct: { ...defaultProduct }
+            };
+        case CANCEL_CREATION:
+            return {
+                ...state,
+                newProduct: null
             };
         default:
             return state
