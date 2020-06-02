@@ -8,7 +8,7 @@ import { fetchProducts } from '../actions';
 function useProducts () {
     const dispatch = useDispatch();
     const products = useSelector<ProductsState, Product[]>(state => state.filteredProducts);
-    const error = useSelector<ProductsState, string>(state => state.fetchError);
+    const error = useSelector<ProductsState, string>(state => state.requestError);
 
     useEffect(() => {
         dispatch(fetchProducts());

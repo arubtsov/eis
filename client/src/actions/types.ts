@@ -6,6 +6,9 @@ export const FETCH_FAIL = 'FETCH_FAIL';
 export const FILTER_PRODUCTS = 'FILTER_PRODUCTS';
 export const CREATE_PRODUCT = 'CREATE_PRODUCT';
 export const CANCEL_CREATION = 'CANCEL_CREATION';
+export const REQUEST_SAVE = 'REQUEST_SAVE';
+export const SAVE_SUCCESS = 'SAVE_SUCCESS';
+export const SAVE_FAIL = 'SAVE_FAIL';
 
 interface FetchProductsAction {
     type: typeof REQUEST_PRODUCTS;
@@ -34,10 +37,27 @@ interface CancelProductCreationAction {
     type: typeof CANCEL_CREATION;
 }
 
+interface RequestSaveAction {
+    type: typeof REQUEST_SAVE;
+}
+
+interface SaveSuccessAction {
+    type: typeof SAVE_SUCCESS;
+    createdProduct: Product;
+}
+
+interface SaveFailAction {
+    type: typeof SAVE_FAIL;
+    error: string;
+}
+
 export type ProductsActionTypes =
     FetchProductsAction |
     ReceiveProductsAction |
     FetchFailAction |
     FilterProductsAction |
     CreateProductAction |
-    CancelProductCreationAction;
+    CancelProductCreationAction |
+    RequestSaveAction |
+    SaveSuccessAction |
+    SaveFailAction;

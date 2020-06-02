@@ -6,12 +6,14 @@ import {
     FETCH_FAIL,
     FILTER_PRODUCTS,
     CREATE_PRODUCT,
-    CANCEL_CREATION
+    CANCEL_CREATION,
+    SAVE_SUCCESS,
+    SAVE_FAIL
 } from '../actions';
 
 export interface ProductsState {
     isLoading: boolean;
-    fetchError: string;
+    requestError: string;
     products: Product[];
     filteredProducts: Product[];
     newProduct: Product | null;
@@ -19,7 +21,7 @@ export interface ProductsState {
 
 const defaultState: ProductsState = {
     isLoading: false,
-    fetchError: '',
+    requestError: '',
     products: [],
     filteredProducts: [],
     newProduct: null
@@ -45,7 +47,7 @@ const products = (state = defaultState, action: ProductsActionTypes): ProductsSt
         case FETCH_SUCCESS:
             return {
                 ...state,
-                fetchError: '',
+                requestError: '',
                 isLoading: false,
                 products: action.products,
                 filteredProducts: action.products
@@ -55,7 +57,7 @@ const products = (state = defaultState, action: ProductsActionTypes): ProductsSt
                 ...state,
                 products: [],
                 filteredProducts: [],
-                fetchError: action.error,
+                requestError: action.error,
                 isLoading: false
             };
         case FILTER_PRODUCTS:
@@ -73,7 +75,21 @@ const products = (state = defaultState, action: ProductsActionTypes): ProductsSt
         case CANCEL_CREATION:
             return {
                 ...state,
+                requestError: '',
                 newProduct: null
+            };
+        case SAVE_SUCCESS:
+            return {
+                ...state,
+                newProduct: null,
+                requestError: '',
+                products: [...state.products, action.createdProduct],
+                filteredProducts: [...state.filteredProducts, action.createdProduct]
+            }
+        case SAVE_FAIL:
+            return {
+                ...state,
+                requestError: action.error
             };
         default:
             return state

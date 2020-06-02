@@ -7,7 +7,10 @@ import {
     FETCH_FAIL,
     FILTER_PRODUCTS,
     CREATE_PRODUCT,
-    CANCEL_CREATION
+    CANCEL_CREATION,
+    REQUEST_SAVE,
+    SAVE_SUCCESS,
+    SAVE_FAIL
 } from './types';
 import { Product } from '../store';
 import { ProductsState } from '../reducers';
@@ -66,5 +69,54 @@ export function cancelCreation (): ProductsActionTypes {
         type: CANCEL_CREATION
     };
 };
+
+export function requestSave (): ProductsActionTypes {
+    return {
+        type: REQUEST_SAVE
+    };
+};
+
+export function successSave (createdProduct: Product): ProductsActionTypes {
+    return {
+        type: SAVE_SUCCESS,
+        createdProduct
+    };
+};
+
+export function failSave (error: string): ProductsActionTypes {
+    return {
+        type: SAVE_FAIL,
+        error
+    };
+};
+
+const saveRequestOptions = (body: {}) => ({
+    method: 'POST',
+    headers: { 'Content-Type': 'application/json' },
+    body: JSON.stringify(body)
+});
+
+export function saveProduct (product: Omit<Product, '_id' | 'price'> & { price: number }) {
+    return async function (dispatch: DispatchFunction): Promise<void> {
+        dispatch(requestSave());
+
+        const response = await fetch('/product', saveRequestOptions(product));
+        const { id, error } = await response.json();
+
+        if (response.ok) {
+            const { price, ...others } = product;
+
+            dispatch(successSave({
+                ...others,
+                _id: id,
+                price: {
+                    $numberDecimal: `${price}`
+                }
+            }));
+        }
+        else
+            dispatch(failSave(error));
+    };
+}
 
 export * from './types';
