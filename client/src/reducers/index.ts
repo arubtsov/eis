@@ -6,7 +6,7 @@ import {
     FETCH_FAIL,
     FILTER_PRODUCTS,
     CREATE_PRODUCT,
-    CANCEL_CREATION,
+    CANCEL_EDITING,
     SAVE_SUCCESS,
     SAVE_FAIL,
     DELETE_SUCCESS
@@ -17,7 +17,7 @@ export interface ProductsState {
     requestError: string;
     products: Product[];
     filteredProducts: Product[];
-    newProduct: Product | null;
+    editedProduct: Product | null;
 }
 
 const defaultState: ProductsState = {
@@ -25,7 +25,7 @@ const defaultState: ProductsState = {
     requestError: '',
     products: [],
     filteredProducts: [],
-    newProduct: null
+    editedProduct: null
 };
 
 const defaultProduct: Product = {
@@ -71,18 +71,18 @@ const products = (state = defaultState, action: ProductsActionTypes): ProductsSt
         case CREATE_PRODUCT:
             return {
                 ...state,
-                newProduct: { ...defaultProduct }
+                editedProduct: { ...defaultProduct }
             };
-        case CANCEL_CREATION:
+        case CANCEL_EDITING:
             return {
                 ...state,
                 requestError: '',
-                newProduct: null
+                editedProduct: null
             };
         case SAVE_SUCCESS:
             return {
                 ...state,
-                newProduct: null,
+                editedProduct: null,
                 requestError: '',
                 products: [...state.products, action.createdProduct],
                 filteredProducts: [...state.filteredProducts, action.createdProduct]

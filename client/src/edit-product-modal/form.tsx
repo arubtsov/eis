@@ -2,7 +2,7 @@ import React, { useState, useCallback, ChangeEventHandler } from 'react';
 import { useDispatch } from 'react-redux';
 
 import { Product } from '../store';
-import useDismiss from './dismiss-creation-hook';
+import useCancel from './cancel-editing-hook';
 import { saveProduct } from '../actions';
 
 import styles from './modal.module.css';
@@ -35,7 +35,7 @@ export default function NewProductForm ({ product }: FormProps) {
         [dispatch, name, quantity, colour, price],
     );
 
-    const onCancel = useDismiss();
+    const cancelEditing = useCancel();
 
     return (
         <form className={styles.modal__form}>
@@ -46,7 +46,7 @@ export default function NewProductForm ({ product }: FormProps) {
 
             <div className={styles.button_group}>
                 <button type="button" onClick={onSave}>Save</button>
-                <button type="button" onClick={onCancel}>Cancel</button>
+                <button type="button" onClick={cancelEditing}>Cancel</button>
             </div>
         </form>
     );

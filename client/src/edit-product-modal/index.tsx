@@ -5,7 +5,7 @@ import { useSelector } from 'react-redux';
 import { Product } from '../store';
 import { ProductsState } from '../reducers';
 import NewProductForm from './form';
-import useDismiss from './dismiss-creation-hook';
+import useCancel from './cancel-editing-hook';
 
 const customModalStyles: Styles = {
     overlay: {
@@ -19,14 +19,14 @@ const customModalStyles: Styles = {
     }
 };
 
-export default function CreateProductModal () {
-    const newProduct = useSelector<ProductsState, Product | null>(state => state.newProduct);
-    const closeModal = useDismiss();
+export default function EditProductModal () {
+    const editedProduct = useSelector<ProductsState, Product | null>(state => state.editedProduct);
+    const closeModal = useCancel();
 
     return (
-        <Modal isOpen={!!newProduct} style={customModalStyles} onRequestClose={closeModal}>
-            {newProduct &&
-                <NewProductForm product={newProduct}/>
+        <Modal isOpen={!!editedProduct} style={customModalStyles} onRequestClose={closeModal}>
+            {editedProduct &&
+                <NewProductForm product={editedProduct}/>
             }
         </Modal>
     );

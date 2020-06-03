@@ -4,7 +4,7 @@ import './App.css';
 import ProductList from './products';
 import SearchBar from './search-bar';
 import AddProductBar from './add-product-bar';
-import CreateProjectModal from './create-product-modal';
+import EditProjectModal from './edit-product-modal';
 
 function App() {
   return (
@@ -12,7 +12,7 @@ function App() {
         <SearchBar />
         <AddProductBar />
         <ProductList />
-        <CreateProjectModal />
+        <EditProjectModal />
     </div>
   );
 }

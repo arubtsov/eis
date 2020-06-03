@@ -7,7 +7,7 @@ import {
     FETCH_FAIL,
     FILTER_PRODUCTS,
     CREATE_PRODUCT,
-    CANCEL_CREATION,
+    CANCEL_EDITING,
     REQUEST_SAVE,
     SAVE_SUCCESS,
     SAVE_FAIL,
@@ -67,9 +67,9 @@ export function createProduct (): ProductsActionTypes {
     };
 };
 
-export function cancelCreation (): ProductsActionTypes {
+export function cancelEditing (): ProductsActionTypes {
     return {
-        type: CANCEL_CREATION
+        type: CANCEL_EDITING
     };
 };
 
