@@ -3,7 +3,7 @@ import { useDispatch } from 'react-redux';
 
 import { Product } from '../store';
 import useCancel from './cancel-editing-hook';
-import { saveProduct } from '../actions';
+import { saveProduct, updateProduct } from '../actions';
 
 import styles from './modal.module.css';
 
@@ -12,6 +12,7 @@ interface FormProps {
 }
 
 export default function NewProductForm ({ product }: FormProps) {
+    const { _id } = product;
     const dispatch = useDispatch();
 
     const [name, setName] = useState(product.name);
@@ -31,7 +32,9 @@ export default function NewProductForm ({ product }: FormProps) {
         event => setColour(event.target.value);
 
     const onSave = useCallback(
-        () => dispatch(saveProduct({ name, quantity, colour, price })),
+        _id ?
+            () => dispatch(updateProduct({ _id, name, quantity, colour, price })) :
+            () => dispatch(saveProduct({ name, quantity, colour, price })),
         [dispatch, name, quantity, colour, price],
     );
 

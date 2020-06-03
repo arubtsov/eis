@@ -17,6 +17,11 @@ export const REQUEST_DELETE = 'REQUEST_DELETE';
 export const DELETE_SUCCESS = 'DELETE_SUCCESS';
 export const DELETE_FAIL = 'DELETE_FAIL';
 
+export const EDIT_PRODUCT = 'EDIT_PRODUCT';
+export const REQUEST_UPDATE_PRODUCT = 'REQUEST_UPDATE_PRODUCT';
+export const UPDATE_SUCCESS = 'UPDATE_SUCCESS';
+export const UPDATE_FAIL = 'UPDATE_FAIL';
+
 interface FetchProductsAction {
     type: typeof REQUEST_PRODUCTS;
 }
@@ -71,6 +76,24 @@ interface DeleteFailAction {
     type: typeof DELETE_FAIL;
 }
 
+interface EditProductAction {
+    type: typeof EDIT_PRODUCT;
+    product: Product;
+}
+
+interface RequestUpdateAction {
+    type: typeof REQUEST_UPDATE_PRODUCT;
+}
+
+interface SuccessUpdateAction {
+    type: typeof UPDATE_SUCCESS;
+    product: Product;
+}
+
+interface FailUpdateAction {
+    type: typeof UPDATE_FAIL;
+}
+
 export type ProductsActionTypes =
     FetchProductsAction |
     ReceiveProductsAction |
@@ -83,4 +106,8 @@ export type ProductsActionTypes =
     SaveFailAction |
     RequestDeletionAction |
     DeleteSuccessAction |
-    DeleteFailAction;
+    DeleteFailAction |
+    EditProductAction |
+    RequestUpdateAction |
+    SuccessUpdateAction |
+    FailUpdateAction;

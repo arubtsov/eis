@@ -13,7 +13,11 @@ import {
     SAVE_FAIL,
     REQUEST_DELETE,
     DELETE_SUCCESS,
-    DELETE_FAIL
+    DELETE_FAIL,
+    EDIT_PRODUCT,
+    REQUEST_UPDATE_PRODUCT,
+    UPDATE_SUCCESS,
+    UPDATE_FAIL
 } from './types';
 import { Product } from '../store';
 import { ProductsState } from '../reducers';
@@ -120,7 +124,7 @@ export function saveProduct (product: Omit<Product, '_id' | 'price'> & { price: 
         else
             dispatch(failSave(error));
     };
-}
+};
 
 export function requestDelete (): ProductsActionTypes {
     return {
@@ -152,6 +156,60 @@ export function deleteProduct (productId: string) {
         else
             dispatch(failDelete());
     };
-}
+};
+
+export function editProduct (product: Product): ProductsActionTypes {
+    return {
+        type: EDIT_PRODUCT,
+        product
+    };
+};
+
+export function requestUpdate (): ProductsActionTypes {
+    return {
+        type: REQUEST_UPDATE_PRODUCT
+    };
+};
+
+export function succesUpdate (product: Product): ProductsActionTypes {
+    return {
+        type: UPDATE_SUCCESS,
+        product
+    };
+};
+
+export function failUpdate (): ProductsActionTypes {
+    return {
+        type: UPDATE_FAIL
+    };
+};
+
+const updateRequestOptions = (body: {}) => ({
+    method: 'PUT',
+    headers: { 'Content-Type': 'application/json' },
+    body: JSON.stringify(body)
+});
+
+export function updateProduct (product: Omit<Product, 'price'> & { price: number }) {
+    return async function (dispatch: DispatchFunction): Promise<void> {
+        dispatch(requestUpdate());
+
+        const { _id, ...changedValues } = product;
+        const { price, ...others } = changedValues;
+        const response = await fetch(`/product/${_id}`, updateRequestOptions(changedValues));
+
+        const editedProduct: Product = {
+            _id, ...others,
+            price: {
+                $numberDecimal: `${price}`
+            }
+        };
+
+        if (response.ok)
+            dispatch(succesUpdate(editedProduct));
+        else
+            dispatch(failUpdate());
+    };
+};
 
 export * from './types';

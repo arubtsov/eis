@@ -9,7 +9,9 @@ import {
     CANCEL_EDITING,
     SAVE_SUCCESS,
     SAVE_FAIL,
-    DELETE_SUCCESS
+    DELETE_SUCCESS,
+    EDIT_PRODUCT,
+    UPDATE_SUCCESS
 } from '../actions';
 
 export interface ProductsState {
@@ -37,6 +39,14 @@ const defaultProduct: Product = {
     },
     colour: 'white'
 };
+
+function updateCollection (collection: Product[], product: Product) {
+    return collection.reduce((newCollection, current) => {
+        newCollection.push(current._id === product._id ? product : current);
+
+        return newCollection;
+    }, [] as Product[]);
+}
 
 const products = (state = defaultState, action: ProductsActionTypes): ProductsState => {
     switch (action.type) {
@@ -99,6 +109,18 @@ const products = (state = defaultState, action: ProductsActionTypes): ProductsSt
                 ...state,
                 products: state.products.filter(isNotDeleted),
                 filteredProducts: state.filteredProducts.filter(isNotDeleted)
+            };
+        case EDIT_PRODUCT:
+            return {
+                ...state,
+                editedProduct: { ...action.product }
+            };
+        case UPDATE_SUCCESS:
+            return {
+                ...state,
+                editedProduct: null,
+                products: updateCollection(state.products, action.product),
+                filteredProducts: updateCollection(state.filteredProducts, action.product)
             };
         default:
             return state
