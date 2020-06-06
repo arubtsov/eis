@@ -1,3 +1,4 @@
+const fs = require('fs')
 const Product = require('../models/product-model');
 
 const createProduct = async (req, res) => {
@@ -47,7 +48,8 @@ const updateProduct = async (req, res) => {
 
 const deleteProject = async (req, res) => {
     try {
-        await Product.findByIdAndDelete(req.params.id).exec()
+        const product = await Product.findByIdAndDelete(req.params.id).exec()
+        fs.unlinkSync(product.imageUrl)
 
         return res.status(204).json({ success: true })
     }
