@@ -7,6 +7,7 @@ const Product = new Schema(
         price: { type: Decimal128, required: true },
         quantity: { type: Number, required: true },
         colour: { type: String, required: true },
+        imageUrl: { type: String, required: true }
     },
     { timestamps: true },
 )

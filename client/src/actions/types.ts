@@ -43,6 +43,7 @@ interface FilterProductsAction {
 
 interface CreateProductAction {
     type: typeof CREATE_PRODUCT;
+    imageItem?: File;
 }
 
 interface CancelProductEditingAction {

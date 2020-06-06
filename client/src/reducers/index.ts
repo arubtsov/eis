@@ -30,15 +30,17 @@ const defaultState: ProductsState = {
     editedProduct: null
 };
 
-const defaultProduct: Product = {
+const defaultProduct = (imageItem?: File): Product => ({
     _id: '',
     name: "Product XYZ",
     quantity: 1,
     price: {
         $numberDecimal: '1'
     },
-    colour: 'white'
-};
+    colour: 'white',
+    imageItem: imageItem as File,
+    imageUrl: ''
+});
 
 function updateCollection (collection: Product[], product: Product) {
     return collection.reduce((newCollection, current) => {
@@ -81,7 +83,7 @@ const products = (state = defaultState, action: ProductsActionTypes): ProductsSt
         case CREATE_PRODUCT:
             return {
                 ...state,
-                editedProduct: { ...defaultProduct }
+                editedProduct: defaultProduct(action.imageItem)
             };
         case CANCEL_EDITING:
             return {

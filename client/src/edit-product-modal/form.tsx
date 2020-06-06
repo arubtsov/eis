@@ -12,7 +12,7 @@ interface FormProps {
 }
 
 export default function NewProductForm ({ product }: FormProps) {
-    const { _id } = product;
+    const { _id, imageItem, imageUrl } = product;
     const dispatch = useDispatch();
 
     const [name, setName] = useState(product.name);
@@ -32,9 +32,9 @@ export default function NewProductForm ({ product }: FormProps) {
         event => setColour(event.target.value);
 
     const onSave = useCallback(
-        _id ?
-            () => dispatch(updateProduct({ _id, name, quantity, colour, price })) :
-            () => dispatch(saveProduct({ name, quantity, colour, price })),
+        _id && imageItem ?
+            () => dispatch(updateProduct({ _id, name, quantity, colour, price, imageItem, imageUrl })) :
+            () => dispatch(saveProduct({ name, quantity, colour, price, imageItem, imageUrl })),
         [dispatch, name, quantity, colour, price],
     );
 

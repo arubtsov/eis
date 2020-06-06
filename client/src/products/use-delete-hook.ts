@@ -1,4 +1,4 @@
-import { useCallback } from 'react';
+import { useCallback, MouseEvent } from 'react';
 import { useDispatch } from 'react-redux';
 import { deleteProduct } from '../actions';
 
@@ -6,7 +6,10 @@ export default function useDelete (productId: string) {
     const dispatch = useDispatch();
 
     return useCallback(
-        () => dispatch(deleteProduct(productId)),
+        (event: MouseEvent) => {
+            event.stopPropagation();
+            dispatch(deleteProduct(productId));
+        },
         [dispatch, productId],
     );
 }

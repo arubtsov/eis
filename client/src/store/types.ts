@@ -6,4 +6,6 @@ export interface Product {
     };
     quantity: number;
     colour: string;
+    imageItem: File;
+    imageUrl: string;
 };

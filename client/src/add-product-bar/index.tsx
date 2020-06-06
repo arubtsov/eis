@@ -2,6 +2,7 @@ import React, { useCallback } from 'react';
 import { useDispatch } from 'react-redux';
 
 import styles from './add-product.module.css';
+import DropImageArea from './drop-area';
 import { createProduct } from '../actions';
 
 export default function AddProductBar () {
@@ -17,9 +18,7 @@ export default function AddProductBar () {
                 onClick={onButtonClick}>
                 Add Product
             </button>
-            <div className={styles.add_product__drop_area}>
-                or drop your product here...
-            </div>
+            <DropImageArea />
         </div>
     );
 };

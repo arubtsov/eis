@@ -65,9 +65,10 @@ export function fetchProducts () {
     };
 };
 
-export function createProduct (): ProductsActionTypes {
+export function createProduct (imageItem?: File): ProductsActionTypes {
     return {
-        type: CREATE_PRODUCT
+        type: CREATE_PRODUCT,
+        imageItem
     };
 };
 
@@ -97,24 +98,33 @@ export function failSave (error: string): ProductsActionTypes {
     };
 };
 
-const saveRequestOptions = (body: {}) => ({
+const saveRequestOptions = (body: FormData) => ({
     method: 'POST',
-    headers: { 'Content-Type': 'application/json' },
-    body: JSON.stringify(body)
+    body
 });
 
 export function saveProduct (product: Omit<Product, '_id' | 'price'> & { price: number }) {
     return async function (dispatch: DispatchFunction): Promise<void> {
         dispatch(requestSave());
 
-        const response = await fetch('/product', saveRequestOptions(product));
-        const { id, error } = await response.json();
+        const { imageItem, ...others } = product;
+        const data = new FormData();
+
+        if (imageItem)
+            data.append('image', imageItem);
+
+        for (const [key, value] of Object.entries(others))
+            data.append(key, value);
+
+        const response = await fetch('/product', saveRequestOptions(data));
+        const { id, imageUrl, error } = await response.json();
 
         if (response.ok) {
             const { price, ...others } = product;
 
             dispatch(successSave({
                 ...others,
+                imageUrl,
                 _id: id,
                 price: {
                     $numberDecimal: `${price}`

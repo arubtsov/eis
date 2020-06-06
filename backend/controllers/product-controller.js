@@ -1,11 +1,11 @@
 const Product = require('../models/product-model');
 
 const createProduct = async (req, res) => {
-    const { body } = req
+    const { body, file } = req
     let product = null;
 
     try {
-        product = new Product(body)
+        product = new Product({ ...body, imageUrl: file.path })
     }
     catch (error) {
         return res.status(400).json({ success: false, error: error.toString() })
@@ -14,7 +14,7 @@ const createProduct = async (req, res) => {
     try {
         await product.save()
 
-        return res.status(201).json({ success: true, id: product._id })
+        return res.status(201).json({ success: true, id: product._id, imageUrl: file.path })
     }
     catch (error) {
         return res.status(500).json({ success: false, error: error.toString() })
