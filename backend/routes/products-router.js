@@ -1,5 +1,6 @@
 const express = require('express')
 const multer = require('multer')
+const path = require('path')
 const {
     createProduct,
     updateProduct,
@@ -12,7 +13,9 @@ const storage = multer.diskStorage({
     destination: 'uploads',
     filename: function (req, file, cb) {
         const uniqueSuffix = Date.now() + '-' + Math.round(Math.random() * 1E9)
-        cb(null, file.fieldname + '-' + uniqueSuffix)
+        const fileName = `${file.fieldname}-${uniqueSuffix}${path.extname(file.originalname)}`
+
+        cb(null, fileName)
     }
 })
 const upload = multer({ storage })
