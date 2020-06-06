@@ -65,7 +65,7 @@ export function fetchProducts () {
     };
 };
 
-export function createProduct (imageItem?: File): ProductsActionTypes {
+export function createProduct (imageItem: File): ProductsActionTypes {
     return {
         type: CREATE_PRODUCT,
         imageItem

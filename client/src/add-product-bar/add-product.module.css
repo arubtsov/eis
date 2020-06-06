@@ -18,3 +18,7 @@
     background-color: lightgray;
     border: 2px dashed;
 }
+
+.add_product__input {
+    display: none;
+}

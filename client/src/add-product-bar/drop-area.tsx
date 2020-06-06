@@ -11,7 +11,7 @@ const getStyles = (dropAllowed: boolean, dragging = false): CSSProperties => {
     };
 };
 
-const imageTypes = ['image/png', 'image/bmp', 'image/jpg', 'image/jpeg'];
+const isImageRegexp = /image\/.+/;
 
 export default function DropArea () {
     const dispatch = useDispatch();
@@ -26,13 +26,14 @@ export default function DropArea () {
         [dispatch, dropAllowed]
     );
 
-    const onDrag: DragEventHandler = event => {
+    const onDragOver: DragEventHandler = event => {
         const { dataTransfer: { items } } = event;
-
-        event.dataTransfer.dropEffect = 'copy';
+        const newDropAllowed = items.length === 1 && isImageRegexp.test(items[0].type);
 
         if (!dragging) setDragging(true);
-        setDropAllowed(items.length === 1 && imageTypes.includes(items[0].type));
+        if (newDropAllowed) event.dataTransfer.dropEffect = 'copy';
+
+        setDropAllowed(newDropAllowed);
     };
 
     const onDragLeave = () => {
@@ -42,8 +43,7 @@ export default function DropArea () {
 
     return (
         <div className={styles.add_product__drop_area} style={getStyles(dropAllowed, dragging)}
-            onDragEnter={onDrag}
-            onDragOver={onDrag}
+            onDragOver={onDragOver}
             onDragLeave={onDragLeave}
             onDrop={onImageDrop}>
             or drop your product here...
