@@ -33,7 +33,7 @@ export default function ProductForm ({ product }: FormProps) {
         event => setColour(event.target.value);
 
     const onSave = useCallback(
-        id && imageItem ?
+        id ?
             () => dispatch(updateProduct({ id, name, quantity, colour, price, imageItem, imageUrl })) :
             () => dispatch(saveProduct({ id, name, quantity, colour, price, imageItem, imageUrl })),
         [dispatch, name, quantity, colour, price],
