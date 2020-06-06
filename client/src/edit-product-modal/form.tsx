@@ -34,7 +34,7 @@ export default function ProductForm ({ product }: FormProps) {
     const onColourChange: ChangeEventHandler<HTMLInputElement> =
         event => setColour(event.target.value);
 
-    const onSave = useCallback(
+    const saveChanges = useCallback(
         id ?
             () => dispatch(updateProduct({ id, name, quantity, colour, price, imageItem, imageUrl })) :
             () => dispatch(saveProduct({ id, name, quantity, colour, price, imageItem, imageUrl })),
@@ -53,7 +53,7 @@ export default function ProductForm ({ product }: FormProps) {
     }, [imageItem, id]);
 
     return (
-        <form className={styles.modal__form}>
+        <form className={styles.modal__form} onSubmit={saveChanges}>
             <ProductImage src={imageSrc} />
             <input type="text" value={name} onChange={onNameChange} />
             <input type="number" value={quantity} onChange={onQuantityChange} min={0} />
@@ -61,7 +61,7 @@ export default function ProductForm ({ product }: FormProps) {
             <input type="text" value={colour} onChange={onColourChange} />
 
             <div className={styles.button_group}>
-                <button type="button" onClick={onSave}>Save</button>
+                <button type="submit">Save</button>
                 <button type="button" onClick={cancelEditing}>Cancel</button>
             </div>
         </form>
