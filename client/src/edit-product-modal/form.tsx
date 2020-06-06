@@ -1,6 +1,7 @@
 import React, { useState, useCallback, ChangeEventHandler } from 'react';
 import { useDispatch } from 'react-redux';
 
+import ProductImage from '../product-image';
 import { Product } from '../store';
 import useCancel from './cancel-editing-hook';
 import { saveProduct, updateProduct } from '../actions';
@@ -42,6 +43,7 @@ export default function ProductForm ({ product }: FormProps) {
 
     return (
         <form className={styles.modal__form}>
+            <ProductImage imageUrl={imageUrl}/>
             <input type="text" value={name} onChange={onNameChange} />
             <input type="number" value={quantity} onChange={onQuantityChange} min={0} />
             <input type="number" value={price} onChange={onPriceChange} min={0} step="0.01" />
