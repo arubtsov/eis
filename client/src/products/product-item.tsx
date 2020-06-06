@@ -1,6 +1,7 @@
 import React from 'react';
 
 import styles from './products.module.css';
+import ProducImage from '../product-image';
 import { Product } from '../store';
 import useDelete from './use-delete-hook';
 import useEdit from './use-edit-hook';
@@ -13,7 +14,7 @@ function ProductItem (props: Product) {
     return (
         <div className={styles.item} onClick={editProduct}>
             <h3 className={styles.item__name}>{name}</h3>
-            <img src={imageUrl} alt="" className={styles.item__img}/>
+            <ProducImage imageUrl={imageUrl}/>
             <div>Price: {price}</div>
             <div>{quantity ? `Quantity: ${quantity}` : 'Out of order'}</div>
             <div>Colour: {colour}</div>
