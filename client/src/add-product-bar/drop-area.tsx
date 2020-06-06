@@ -23,9 +23,6 @@ export default function DropArea () {
     const onDrag: DragEventHandler = event => {
         const { dataTransfer: { items } } = event;
 
-        console.log(items.length === 1 && imageTypes.includes(items[0].type));
-        console.log(items[0]);
-
         setDropAllowed(items.length === 1 && imageTypes.includes(items[0].type));
     };
 

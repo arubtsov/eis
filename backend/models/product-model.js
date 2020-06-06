@@ -12,4 +12,13 @@ const Product = new Schema(
     { timestamps: true },
 )
 
+Product.set('toJSON', {
+    getters: true,
+    transform: (doc, ret) => {
+        ret.price = parseFloat(ret.price.toString());
+        delete ret.__v;
+        return ret;
+    },
+});
+
 module.exports = model('products', Product)

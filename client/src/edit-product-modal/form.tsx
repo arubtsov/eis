@@ -11,8 +11,8 @@ interface FormProps {
     product: Product;
 }
 
-export default function NewProductForm ({ product }: FormProps) {
-    const { _id, imageItem, imageUrl } = product;
+export default function ProductForm ({ product }: FormProps) {
+    const { id, imageItem, imageUrl } = product;
     const dispatch = useDispatch();
 
     const [name, setName] = useState(product.name);
@@ -23,7 +23,7 @@ export default function NewProductForm ({ product }: FormProps) {
     const onQuantityChange: ChangeEventHandler<HTMLInputElement> =
         event => setQuantity(parseInt(event.target.value, 10));
 
-    const [price, setPrice] = useState(parseFloat(product.price.$numberDecimal));
+    const [price, setPrice] = useState(product.price);
     const onPriceChange: ChangeEventHandler<HTMLInputElement> =
         event => setPrice(parseFloat(event.target.value));
 
@@ -32,9 +32,9 @@ export default function NewProductForm ({ product }: FormProps) {
         event => setColour(event.target.value);
 
     const onSave = useCallback(
-        _id && imageItem ?
-            () => dispatch(updateProduct({ _id, name, quantity, colour, price, imageItem, imageUrl })) :
-            () => dispatch(saveProduct({ name, quantity, colour, price, imageItem, imageUrl })),
+        id && imageItem ?
+            () => dispatch(updateProduct({ id, name, quantity, colour, price, imageItem, imageUrl })) :
+            () => dispatch(saveProduct({ id, name, quantity, colour, price, imageItem, imageUrl })),
         [dispatch, name, quantity, colour, price],
     );
 

@@ -1,9 +1,7 @@
 export interface Product {
-    _id: string;
+    id: string;
     name: string;
-    price: {
-        "$numberDecimal": string;
-    };
+    price: number;
     quantity: number;
     colour: string;
     imageItem: File;

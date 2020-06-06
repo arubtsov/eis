@@ -31,12 +31,10 @@ const defaultState: ProductsState = {
 };
 
 const defaultProduct = (imageItem?: File): Product => ({
-    _id: '',
+    id: '',
     name: "Product XYZ",
     quantity: 1,
-    price: {
-        $numberDecimal: '1'
-    },
+    price: 1,
     colour: 'white',
     imageItem: imageItem as File,
     imageUrl: ''
@@ -44,7 +42,7 @@ const defaultProduct = (imageItem?: File): Product => ({
 
 function updateCollection (collection: Product[], product: Product) {
     return collection.reduce((newCollection, current) => {
-        newCollection.push(current._id === product._id ? product : current);
+        newCollection.push(current.id === product.id ? product : current);
 
         return newCollection;
     }, [] as Product[]);
@@ -105,7 +103,7 @@ const products = (state = defaultState, action: ProductsActionTypes): ProductsSt
                 requestError: action.error
             };
         case DELETE_SUCCESS:
-            const isNotDeleted = (product: Product) => product._id !== action.productId;
+            const isNotDeleted = (product: Product) => product.id !== action.productId;
 
             return {
                 ...state,

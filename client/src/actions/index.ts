@@ -103,7 +103,7 @@ const saveRequestOptions = (body: FormData) => ({
     body
 });
 
-export function saveProduct (product: Omit<Product, '_id' | 'price'> & { price: number }) {
+export function saveProduct (product: Product) {
     return async function (dispatch: DispatchFunction): Promise<void> {
         dispatch(requestSave());
 
@@ -119,18 +119,8 @@ export function saveProduct (product: Omit<Product, '_id' | 'price'> & { price: 
         const response = await fetch('/product', saveRequestOptions(data));
         const { id, imageUrl, error } = await response.json();
 
-        if (response.ok) {
-            const { price, ...others } = product;
-
-            dispatch(successSave({
-                ...others,
-                imageUrl,
-                _id: id,
-                price: {
-                    $numberDecimal: `${price}`
-                }
-            }));
-        }
+        if (response.ok)
+            dispatch(successSave({ ...product, imageUrl, id }));
         else
             dispatch(failSave(error));
     };
@@ -200,23 +190,15 @@ const updateRequestOptions = (body: {}) => ({
     body: JSON.stringify(body)
 });
 
-export function updateProduct (product: Omit<Product, 'price'> & { price: number }) {
+export function updateProduct (product: Product) {
     return async function (dispatch: DispatchFunction): Promise<void> {
         dispatch(requestUpdate());
 
-        const { _id, ...changedValues } = product;
-        const { price, ...others } = changedValues;
-        const response = await fetch(`/product/${_id}`, updateRequestOptions(changedValues));
-
-        const editedProduct: Product = {
-            _id, ...others,
-            price: {
-                $numberDecimal: `${price}`
-            }
-        };
+        const { id, ...changedValues } = product;
+        const response = await fetch(`/product/${id}`, updateRequestOptions(changedValues));
 
         if (response.ok)
-            dispatch(succesUpdate(editedProduct));
+            dispatch(succesUpdate(product));
         else
             dispatch(failUpdate());
     };

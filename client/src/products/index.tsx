@@ -8,7 +8,7 @@ function ProductList () {
 
     return (
         <div className={styles.products}>
-            {products.map(item => <ProductItem key={item._id} {...item}/>)}
+            {products.map(item => <ProductItem key={item.id} {...item}/>)}
         </div>
     );
 }
