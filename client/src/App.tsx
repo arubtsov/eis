@@ -8,16 +8,19 @@ import EditProjectModal from './edit-product-modal';
 
 type DragEvents = 'dragleave' | 'dragenter' | 'dragover' | 'drop';
 const DRAG_EVENTS: DragEvents[] = ['dragover', 'dragenter', 'drop', 'dragleave'];
-const preventDragEvents = (event: DragEvent) => event.preventDefault();
+const preventDragEvents = (event: DragEvent) => {
+    event.preventDefault();
+    if (event.dataTransfer) event.dataTransfer.dropEffect = 'none';
+};
 
 function App () {
     useEffect(() => {
         for (const event of DRAG_EVENTS)
-            window.addEventListener(event, preventDragEvents);
+            window.document.body.addEventListener(event, preventDragEvents);
 
         return () => {
             for (const event of DRAG_EVENTS)
-                window.removeEventListener(event, preventDragEvents);
+                window.document.body.removeEventListener(event, preventDragEvents);
         };
     }, []);
 

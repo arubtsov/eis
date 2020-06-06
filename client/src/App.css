@@ -1,5 +1,5 @@
 .App {
-    margin: 3% 20% 0;
+    padding: 3% 20% 0;
     display: flex;
     flex-direction: column;
 }
