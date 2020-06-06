@@ -1,4 +1,4 @@
-import React, { useState, useCallback, ChangeEventHandler } from 'react';
+import React, { useState, useCallback, useEffect, ChangeEventHandler } from 'react';
 import { useDispatch } from 'react-redux';
 
 import ProductImage from '../product-image';
@@ -15,6 +15,8 @@ interface FormProps {
 export default function ProductForm ({ product }: FormProps) {
     const { id, imageItem, imageUrl } = product;
     const dispatch = useDispatch();
+
+    const [imageSrc, setSrc] = useState(imageUrl);
 
     const [name, setName] = useState(product.name);
     const onNameChange: ChangeEventHandler<HTMLInputElement> =
@@ -41,9 +43,18 @@ export default function ProductForm ({ product }: FormProps) {
 
     const cancelEditing = useCancel();
 
+    useEffect(() => {
+        if (!id) {
+            const reader = new FileReader();
+
+            reader.onload = () => setSrc(reader.result as string);
+            reader.readAsDataURL(imageItem);
+        }
+    }, [imageItem, id]);
+
     return (
         <form className={styles.modal__form}>
-            <ProductImage imageUrl={imageUrl}/>
+            <ProductImage src={imageSrc} />
             <input type="text" value={name} onChange={onNameChange} />
             <input type="number" value={quantity} onChange={onQuantityChange} min={0} />
             <input type="number" value={price} onChange={onPriceChange} min={0} step="0.01" />

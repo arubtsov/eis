@@ -14,7 +14,7 @@ function ProductItem (props: Product) {
     return (
         <div className={styles.item} onClick={editProduct}>
             <h3 className={styles.item__name}>{name}</h3>
-            <ProducImage imageUrl={imageUrl}/>
+            <ProducImage src={imageUrl}/>
             <div>Price: {price}</div>
             <div>{quantity ? `Quantity: ${quantity}` : 'Out of order'}</div>
             <div>Colour: {colour}</div>
