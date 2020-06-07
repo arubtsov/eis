@@ -18,10 +18,8 @@ export default function AddProductBar () {
         (event: ChangeEvent<HTMLInputElement>) => {
             const { current: input } = inputRef;
 
-            if (input && input.files && input.files.length) {
+            if (input && input.files && input.files.length)
                 dispatch(createProduct(input.files[0]));
-                input.value = '';
-            }
         },
         [dispatch]
     );

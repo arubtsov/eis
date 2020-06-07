@@ -4,7 +4,7 @@ import { useSelector } from 'react-redux';
 
 import { Product } from '../store';
 import { ProductsState } from '../reducers';
-import NewProductForm from './form';
+import ProductForm from './form';
 import useCancel from './cancel-editing-hook';
 
 const customModalStyles: Styles = {
@@ -26,7 +26,7 @@ export default function EditProductModal () {
     return (
         <Modal isOpen={!!editedProduct} style={customModalStyles} onRequestClose={closeModal}>
             {editedProduct &&
-                <NewProductForm product={editedProduct}/>
+                <ProductForm product={editedProduct}/>
             }
         </Modal>
     );

@@ -55,7 +55,7 @@ export default function ProductForm ({ product }: FormProps) {
     return (
         <form className={styles.modal__form} onSubmit={saveChanges}>
             <ProductImage src={imageSrc} />
-            <input type="text" value={name} onChange={onNameChange} />
+            <input type="text" value={name} onChange={onNameChange} autoFocus/>
             <input type="number" value={quantity} onChange={onQuantityChange} min={0} />
             <input type="number" value={price} onChange={onPriceChange} min={0} step="0.01" />
             <input type="text" value={colour} onChange={onColourChange} />
