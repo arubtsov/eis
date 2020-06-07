@@ -22,7 +22,7 @@ export interface ProductsState {
     editedProduct: Product | null;
 }
 
-const defaultState: ProductsState = {
+export const defaultState: ProductsState = {
     isLoading: false,
     requestError: '',
     products: [],
@@ -30,9 +30,9 @@ const defaultState: ProductsState = {
     editedProduct: null
 };
 
-const defaultProduct = (imageItem?: File): Product => ({
+const defaultProduct = (imageItem: File, index: number): Product => ({
     id: '',
-    name: "Product XYZ",
+    name: `Product XYZ${index}`,
     quantity: 1,
     price: 1,
     colour: 'white',
@@ -81,7 +81,7 @@ const products = (state = defaultState, action: ProductsActionTypes): ProductsSt
         case CREATE_PRODUCT:
             return {
                 ...state,
-                editedProduct: defaultProduct(action.imageItem)
+                editedProduct: defaultProduct(action.imageItem, state.products.length + 1)
             };
         case CANCEL_EDITING:
             return {
