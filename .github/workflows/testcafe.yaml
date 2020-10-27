@@ -1,17 +1,19 @@
 name: End-to-End Tests
 on: [push]
 
+defaults:
+    run:
+        working-directory: ./client
+
 jobs:
     test:
       name: Run TestCafe Tests
-      runs-on: windows-latest
+      runs-on: windows-latest      
       steps:
         - name: Check out the repository
           uses: actions/checkout@v1
         - run: npm install
-          working-directory: ./client
         - name: Run tests
-          uses: DevExpress/testcafe-action@latest
-          working-directory: ./client
+          uses: DevExpress/testcafe-action@latest      
           with:
               args: "chrome e2e"
