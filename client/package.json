@@ -43,6 +43,7 @@
   "proxy": "http://localhost:3001",
   "devDependencies": {
     "@types/react-modal": "^3.10.5",
-    "@types/react-redux": "^7.1.9"
+    "@types/react-redux": "^7.1.9",
+    "testcafe": "^1.9.4"
   }
 }
